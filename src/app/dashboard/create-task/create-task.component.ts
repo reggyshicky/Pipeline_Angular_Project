@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, Input, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Task } from 'src/app/Model/Task';
 import { TaskService } from 'src/app/Services/task.service';
@@ -8,10 +8,10 @@ import { TaskService } from 'src/app/Services/task.service';
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.css']
 })
-export class CreateTaskComponent {
+export class CreateTaskComponent implements OnInit, AfterViewInit {
 
   constructor(private taskService:TaskService){}
-  @Input() isEditMode: boolean = false;
+  @Input() isEditMode = false;
 
   @Input() selectedTask: Task={title:'',desc:''};
 
@@ -26,8 +26,8 @@ export class CreateTaskComponent {
   @Output()
   formValidationErrormessage:EventEmitter<string> = new EventEmitter<string>()
 
-  title:string=''
-  desc:string=''
+  title=''
+  desc=''
 
   ngOnInit():void {
   this.taskService.selectedTask.subscribe({

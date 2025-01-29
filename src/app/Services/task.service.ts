@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Task } from "../Model/Task";
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { LoggingService } from "./Logging.Service";
 
@@ -39,14 +39,14 @@ export class TaskService{
     }
 
     GetAllPolicies(){
-        return this.http.get<{[key: string]: Task}>(
+        return this.http.get<Record<string, Task>>(
             'https://insurance-policies-5d33e-default-rtdb.firebaseio.com/policies.json'
             ,{observe: 'body'}
             ).pipe(map((response) => {
                  //TRANSFORM DATA
-                 let tasks = [];
+                 const tasks = [];
                  console.log(response);
-                 for(let key in response){
+                 for(const key in response){
                    if(response.hasOwnProperty(key)){
                      tasks.push({...response[key], id: key});
                    }              

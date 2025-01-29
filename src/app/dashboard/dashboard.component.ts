@@ -1,23 +1,24 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { Task } from '../Model/Task';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { TaskService } from '../Services/task.service';
 import { Subscription } from 'rxjs';
+import { SearchEvent } from '../Model/search-event.interface';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit{
-  showCreateTaskForm: boolean = false;
-  showTaskDetails: boolean = false;
+export class DashboardComponent implements OnInit, OnDestroy{
+  showCreateTaskForm = false;
+  showTaskDetails = false;
   http: HttpClient = inject(HttpClient)
   displayedPolicies:Task[]=[]
   AllPolicies: Task[]= [];
   taskService: TaskService = inject(TaskService);
-  currentPolicyId: string = '';
-  isLoading: boolean = false;
+  currentPolicyId = '';
+  isLoading = false;
 
   currentPolicy: Task | null = null;
 
@@ -25,7 +26,7 @@ export class DashboardComponent implements OnInit{
   successMessage:string|null = null;
   displayMessage:string|null = null;
 
-  editMode: boolean = false;
+  editMode = false;
   selectedPolicy: Task;
 
   errorSub: Subscription
@@ -143,6 +144,7 @@ export class DashboardComponent implements OnInit{
 
       },
       error: (err) => {
+        console.log(err)
       // this.errorSubject.next(err);
   }});;
   }
