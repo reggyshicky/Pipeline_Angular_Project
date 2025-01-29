@@ -162,7 +162,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     
   }
 
-  onSearchClicked(data:any){
+  onSearchClicked(data:string){
     console.log(data)
     if(!data.data){
       this.displayedPolicies=this.AllPolicies
