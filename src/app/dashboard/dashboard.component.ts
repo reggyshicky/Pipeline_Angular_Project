@@ -3,7 +3,6 @@ import { Task } from '../Model/Task';
 import { HttpClient } from '@angular/common/http';
 import { TaskService } from '../Services/task.service';
 import { Subscription } from 'rxjs';
-import { SearchEvent } from '../Model/search-event.interface';
 
 @Component({
   selector: 'app-dashboard',
